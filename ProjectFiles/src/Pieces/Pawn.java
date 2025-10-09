@@ -2,6 +2,8 @@ package Pieces;
 
 import UtilityClasses.*;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece{
     public Color color;
     public Position position;
@@ -12,8 +14,8 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public Position[] possibleMoves(){
-        return new Position[]{};
+    public ArrayList<Position> possibleMoves(){
+        return new ArrayList<>();
     }
     @Override
     public void move(Position position){
