@@ -2,6 +2,8 @@ package Pieces;
 
 import UtilityClasses.*;
 
+import java.util.ArrayList;
+
 public class Piece {
     public Color color;
     public Position position;
@@ -16,8 +18,8 @@ public class Piece {
         return color.color;
     }
 
-    public Position[] possibleMoves(){
-        return new Position[]{position};
+    public ArrayList<Position> possibleMoves(){
+        return new ArrayList<Position>();
     }
     public void move(Position newPosition){
         return;
