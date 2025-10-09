@@ -12,6 +12,10 @@ public class Piece {
         this.position = position;
     }
 
+    public char getColor(){
+        return color.color;
+    }
+
     public Position[] possibleMoves(){
         return new Position[]{position};
     }
