@@ -1,3 +1,5 @@
+package Game;
+
 import UtilityClasses.*;
 
 import java.util.ArrayList;
@@ -12,20 +14,13 @@ public class Game {
     public Game()
     {
         this.chessBoard = new Board();
-        this.white = new Player(new Color('W'));
-        this.black = new Player(new Color('B'));
+        this.white = new Player(new Color('W'), chessBoard);
+        this.black = new Player(new Color('B'), chessBoard);
         this.currentTurn = white;
     }
 
     public void start(){
-        for (int row = 0; row < 8; row++){
-            ArrayList<Square> boardRow = new ArrayList<Square>();
-            for (int col = 0; col < 8; col++){
-                String pattern = ((row + col) % 2 == 0) ? "##" : "  ";
-                boardRow.add(new Square(pattern));
-            }
-            chessBoard.board.add(boardRow);
-        }
+        play();
     }
     public void end(){
         if (currentTurn == white){

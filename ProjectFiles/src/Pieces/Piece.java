@@ -1,6 +1,7 @@
 package Pieces;
 
 import UtilityClasses.*;
+import Game.Board;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class Piece {
         return color.color;
     }
 
-    public ArrayList<Position> possibleMoves(){
+    public ArrayList<Position> possibleMoves(Board board){
         return new ArrayList<Position>();
     }
     public void move(Position newPosition){
