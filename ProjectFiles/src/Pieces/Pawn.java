@@ -20,12 +20,14 @@ public class Pawn extends Piece{
     @Override
     public ArrayList<Position> possibleMoves(Board board){
         ArrayList<Position> possibleMoves = new ArrayList<>();
+        // Determines direction of pawn (white upwards, black downwards)
         int direction = (color.color == 'W') ? -1 : 1;
 
         Position forward = new Position(position.row + direction, position.col);
         if (board.isValidPosition(forward) && board.getPiece(forward) == null) {
             possibleMoves.add(forward);
 
+            // Handles two square movement on a pawn's first move
             int startingRow = (color.color == 'W') ? 6 : 1;
             if (position.row == startingRow) {
                 Position doubleForward = new Position(position.row + 2 * direction, position.col);
@@ -34,6 +36,7 @@ public class Pawn extends Piece{
                 }
             }
         }
+        // Handles logic diagonal movement which requires the pawn to take a piece
         Position takeLeft = new Position(position.row + direction, position.col - 1);
         if (board.isValidPosition(takeLeft)){
             Piece target = board.getPiece(takeLeft);

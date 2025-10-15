@@ -11,6 +11,7 @@ public class Game {
     public Player black;
     public Player currentTurn;
 
+    // Default constructor
     public Game()
     {
         this.chessBoard = new Board();
@@ -19,22 +20,24 @@ public class Game {
         this.currentTurn = white;
     }
 
-    public void start(){
-        play();
-    }
+    // Ends game once checkmate is detected
     public void end(){
         if (currentTurn == white){
             System.out.println("Black wins!");
         }
         else System.out.println("White wins!");
     }
+    // Creates the loop for gameplay
     public void play(){
         Scanner input = new Scanner(System.in);
         System.out.println("Welcome to Console Chess!");
         System.out.println("To make a move type to position of the piece you want to move");
         System.out.println("followed by the desired position. EX: \"C2 C3\"");
         System.out.println("White will move first, good luck!");
+        // Loop checks if checkmate has been reached after every turn.
         while (!chessBoard.isCheckmate(currentTurn.color)){
+            String turn = (currentTurn == white) ? "White" : "Black";
+            System.out.println(turn + "'s turn.");
             chessBoard.displayBoard();
             currentTurn.makeMove(input, chessBoard);
 

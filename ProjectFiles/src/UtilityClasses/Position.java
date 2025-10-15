@@ -9,6 +9,7 @@ public class Position {
         this.col = col;
     }
 
+    // Overrides default "==" with custom definition to avoid bugs
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;

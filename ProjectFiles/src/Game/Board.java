@@ -10,8 +10,10 @@ public class Board {
     public ArrayList<ArrayList<Square>> board;
     public ArrayList<Piece> capturedPieces;
 
+    // Default constructor
     public Board() {
         this.board = new ArrayList<ArrayList<Square>>();
+        // Initializes base state of board
         for (int row = 0; row < 8; row++){
             ArrayList<Square> boardRow = new ArrayList<Square>();
             for (int col = 0; col < 8; col++){
@@ -23,17 +25,20 @@ public class Board {
         this.capturedPieces = new ArrayList<>();
     }
 
+    // Checks is position is within bound of board
     public boolean isValidPosition(Position position){
         if (position == null) return false;
         return position.row >= 0 && position.row < 8 &&
                 position.col >= 0 && position.col < 8;
     }
 
+    // Returns piece at position
     public Piece getPiece(Position position) {
         if (board.get(position.row).get(position.col).piece.isEmpty()) return null;
         return board.get(position.row).get(position.col).piece.getFirst();
     }
 
+    // Displays current board state
     public void displayBoard(){
         System.out.println("  A  B  C  D  E  F  G  H");
         for (int row = 0; row < 8; row++){
@@ -45,10 +50,12 @@ public class Board {
         }
     }
 
+    // Moves piece on board
     public void movePiece(Position curr, Position next) {
         Piece movingPiece = getPiece(curr);
         if (movingPiece == null) return;
 
+        // Detects if a piece is at targeted location
         if(!board.get(next.row).get(next.col).piece.isEmpty()){
             capturedPieces.add(getPiece(next));
             board.get(next.row).get(next.col).piece.clear();
@@ -60,6 +67,7 @@ public class Board {
     }
 
     public boolean isCheck(Color color) {
+        // Obtains location of king
         Position kingSquare = null;
         for (ArrayList<Square> row : board) {
             for (Square square : row) {
@@ -73,6 +81,7 @@ public class Board {
             }
         }
 
+        // Determines if king is under attack by an enemy piece
         for (ArrayList<Square> row : board) {
             for (Square square : row) {
                 if (!square.piece.isEmpty()) {
@@ -92,6 +101,7 @@ public class Board {
             return false;
         }
 
+        // Tests if any friendly pieces (including king) can be moved to avoid checkmate
         for (ArrayList<Square> row : board) {
             for (Square square : row) {
                 if (!square.piece.isEmpty()) {

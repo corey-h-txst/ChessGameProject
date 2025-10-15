@@ -11,6 +11,7 @@ public class Square {
         this.squareBase = squareBase;
         this.piece = new ArrayList<Piece>();
     }
+    // Used for displaying board state when a piece is or isn't on any given square
     public String getDisplay(){
         if (piece.isEmpty()){
             return squareBase;
