@@ -20,35 +20,31 @@ public class Pawn extends Piece{
     @Override
     public ArrayList<Position> possibleMoves(Board board){
         ArrayList<Position> possibleMoves = new ArrayList<>();
-        if(color.color == 'B'){
-            Position forward = new Position(position.row + 1, position.col);
-            if (board.isValidPosition(forward) && board.getPiece(forward) == null) {
-                possibleMoves.add(forward);
-            }
-            Position takeLeft = new Position(position.row + 1, position.col + 1);
-            if (board.isValidPosition(takeLeft) && board.getPiece(takeLeft) != null && board.getPiece(takeLeft).color != color) {
-                possibleMoves.add(takeLeft);
-            }
-            Position takeRight = new Position(position.row + 1, position.col - 1);
-            if (board.isValidPosition(takeRight) && board.getPiece(takeRight) != null && board.getPiece(takeRight).color != color) {
-                possibleMoves.add(takeRight);
-            }
-        }
-        else{
-            Position forward = new Position(position.row - 1, position.col);
-            if (board.isValidPosition(forward) && board.getPiece(forward) == null) {
-                possibleMoves.add(forward);
-            }
-            Position takeLeft = new Position(position.row - 1, position.col + 1);
-            if (board.isValidPosition(takeLeft) && board.getPiece(takeLeft) != null && board.getPiece(takeLeft).color != color) {
-                possibleMoves.add(takeLeft);
-            }
-            Position takeRight = new Position(position.row - 1, position.col - 1);
-            if (board.isValidPosition(takeRight) && board.getPiece(takeRight) != null && board.getPiece(takeRight).color != color) {
-                possibleMoves.add(takeRight);
+        int direction = (color.color == 'W') ? -1 : 1;
+
+        Position forward = new Position(position.row + direction, position.col);
+        if (board.isValidPosition(forward) && board.getPiece(forward) == null) {
+            possibleMoves.add(forward);
+
+            int startingRow = (color.color == 'W') ? 6 : 1;
+            if (position.row == startingRow) {
+                Position doubleForward = new Position(position.row + 2 * direction, position.col);
+                if(board.isValidPosition(doubleForward) && board.getPiece(doubleForward) == null){
+                possibleMoves.add(doubleForward);
+                }
             }
         }
+        Position takeLeft = new Position(position.row + direction, position.col - 1);
+        if (board.isValidPosition(takeLeft)){
+            Piece target = board.getPiece(takeLeft);
+            if (target != null && target.color != color) possibleMoves.add(takeLeft);
+        }
+        Position takeRight = new Position(position.row + direction, position.col - 1);
+        if (board.isValidPosition(takeRight)) {
+            Piece target = board.getPiece(takeRight);
+            if (target != null && target.color != color) possibleMoves.add(takeRight);
+        }
+
         return possibleMoves;
     }
-
 }

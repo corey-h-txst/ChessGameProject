@@ -8,4 +8,13 @@ public class Position {
         this.row = row;
         this.col = col;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        Position other = (Position) obj;
+        return this.row == other.row && this.col == other.col;
+    }
+
 }

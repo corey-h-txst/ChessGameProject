@@ -46,12 +46,17 @@ public class Board {
     }
 
     public void movePiece(Position curr, Position next) {
-        if (!board.get(next.row).get(next.col).piece.isEmpty()) {
+        Piece movingPiece = getPiece(curr);
+        if (movingPiece == null) return;
+
+        if(!board.get(next.row).get(next.col).piece.isEmpty()){
             capturedPieces.add(getPiece(next));
             board.get(next.row).get(next.col).piece.clear();
         }
-        board.get(next.row).get(next.col).piece.add(getPiece(curr));
+        board.get(next.row).get(next.col).piece.add(movingPiece);
         board.get(curr.row).get(curr.col).piece.clear();
+
+        movingPiece.position = next;
     }
 
     public boolean isCheck(Color color) {
@@ -62,10 +67,12 @@ public class Board {
                     Piece piece = square.piece.getFirst();
                     if (piece instanceof King && piece.color == color) {
                         kingSquare = piece.position;
+                        break;
                     }
                 }
             }
         }
+
         for (ArrayList<Square> row : board) {
             for (Square square : row) {
                 if (!square.piece.isEmpty()) {
@@ -85,32 +92,39 @@ public class Board {
             return false;
         }
 
-        Position kingSquare = null;
         for (ArrayList<Square> row : board) {
             for (Square square : row) {
                 if (!square.piece.isEmpty()) {
                     Piece piece = square.piece.getFirst();
-                    if (piece instanceof King && piece.color == color) {
-                        kingSquare = piece.position;
+                    if (piece.color == color) {
+
+                        ArrayList<Position> moves = piece.possibleMoves(this);
+                        for (Position move : moves) {
+                            Piece captured = getPiece(move);
+                            Position originalPos = piece.position;
+
+                            movePiece(originalPos, move);
+
+                            if (!isCheck(color)) {
+                                board.get(originalPos.row).get(originalPos.col).piece.add(piece);
+                                piece.position = originalPos;
+                                board.get(move.row).get(move.col).piece.clear();
+                                if (captured != null) board.get(move.row).get(move.col).piece.add(captured);
+
+                                System.out.println("Check!");
+                                return false;
+                            }
+
+                            board.get(originalPos.row).get(originalPos.col).piece.add(piece);
+                            piece.position = originalPos;
+                            board.get(move.row).get(move.col).piece.clear();
+                            if (captured != null) board.get(move.row).get(move.col).piece.add(captured);
+                        }
                     }
                 }
             }
         }
-        HashSet<Position> attacked = new HashSet<Position>();
-        for (ArrayList<Square> row : board) {
-            for (Square square : row) {
-                if (!square.piece.isEmpty()) {
-                    Piece piece = square.piece.getFirst();
-                    if (piece.color != color) {
-                        attacked.addAll(piece.possibleMoves(this));
-                    }
-                }
-            }
-        }
-        ArrayList<Position> kingMoves = getPiece(kingSquare).possibleMoves(this);
-        for(Position move : kingMoves){
-            if (!attacked.contains(move)){return false;}
-        }
+        System.out.println("Checkmate!");
         return true;
     }
 }

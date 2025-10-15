@@ -15,7 +15,7 @@ public class Player {
         char charColor = this.color.color;
         int mainRow, pawnRow;
 
-        if(charColor == 'B')
+        if(charColor == 'W')
         {
             mainRow = 7;
             pawnRow = 6;
@@ -44,27 +44,53 @@ public class Player {
     }
 
     public void makeMove(Scanner input, Board board){
-        int col;
-        int row;
-        String selected = input.next();
-        String target = input.next();
+        while(true) {
+            System.out.print("Please enter your move: ");
 
-        col = selected.charAt(0) - 'A';
-        row = selected.charAt(1) - '1';
-        Position selectedPosition = new Position(row, col);
+            String selected = input.next();
+            String target = input.next();
 
-        col = target.charAt(0) - 'A';
-        row = target.charAt(1) - '1';
-        Position targetPosition = new Position(row, col);
+            int col = Character.toUpperCase(selected.charAt(0)) - 'A';
+            int row = 8 - (selected.charAt(1) - '1') - 1;
+            Position selectedPosition = new Position(row, col);
 
-        ArrayList<Position> possibleMoves = board.getPiece(selectedPosition).possibleMoves(board);
-        if(possibleMoves.contains(targetPosition)){
-            board.movePiece(selectedPosition, targetPosition);
+            col = Character.toUpperCase(target.charAt(0)) - 'A';
+            row = 8 - (target.charAt(1) - '1') - 1;
+            Position targetPosition = new Position(row, col);
+
+            Piece piece = board.getPiece(selectedPosition);
+            if(piece == null){
+                System.out.println("No piece at that position.");
+                continue;
+            }
+            if(piece.color != this.color){
+                System.out.println("Cannot move opponent's pieces.");
+                continue;
+            }
+
+            ArrayList<Position> legalMoves = new ArrayList<>();
+            for (Position move : piece.possibleMoves(board)) {
+                Piece captured = board.getPiece(move);
+                Position originalPos = piece.position;
+
+                board.movePiece(originalPos, move);
+
+                if (!board.isCheck(piece.color)) {
+                    legalMoves.add(move);
+                }
+
+                board.board.get(originalPos.row).get(originalPos.col).piece.add(piece);
+                piece.position = originalPos;
+                board.board.get(move.row).get(move.col).piece.clear();
+                if (captured != null) board.board.get(move.row).get(move.col).piece.add(captured);
+            }
+
+            if (legalMoves.contains(targetPosition)) {
+                board.movePiece(selectedPosition, targetPosition);
+                break;
+            } else {
+                System.out.println("Invalid move, your king would be in check or move is not allowed. Try again.");
+            }
         }
-        else {
-            System.out.println("Invalid move, please try again.");
-            makeMove(input, board);
-        }
-        return;
     }
 }
