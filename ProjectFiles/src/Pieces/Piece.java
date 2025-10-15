@@ -22,7 +22,4 @@ public class Piece {
     public ArrayList<Position> possibleMoves(Board board){
         return new ArrayList<Position>();
     }
-    public void move(Position newPosition){
-        return;
-    }
 }

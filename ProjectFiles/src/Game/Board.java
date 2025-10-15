@@ -23,6 +23,12 @@ public class Board {
         this.capturedPieces = new ArrayList<>();
     }
 
+    public boolean isValidPosition(Position position){
+        if (position == null) return false;
+        return position.row >= 0 && position.row < 8 &&
+                position.col >= 0 && position.col < 8;
+    }
+
     public Piece getPiece(Position position) {
         if (board.get(position.row).get(position.col).piece.isEmpty()) return null;
         return board.get(position.row).get(position.col).piece.getFirst();
@@ -31,8 +37,9 @@ public class Board {
     public void movePiece(Position curr, Position next) {
         if (!board.get(next.row).get(next.col).piece.isEmpty()) {
             capturedPieces.add(getPiece(next));
+            board.get(next.row).get(next.col).piece.clear();
         }
-        board.get(next.row).get(next.col).piece.set(0, getPiece(curr));
+        board.get(next.row).get(next.col).piece.add(getPiece(curr));
         board.get(curr.row).get(curr.col).piece.clear();
     }
 

@@ -51,11 +51,11 @@ public class Player {
 
         col = selected.charAt(0) - 'A';
         row = selected.charAt(1) - '1';
-        Position selectedPosition = new Position(col, selected.charAt(1));
+        Position selectedPosition = new Position(row, col);
 
         col = target.charAt(0) - 'A';
         row = target.charAt(1) - '1';
-        Position targetPosition = new Position(col, target.charAt(1));
+        Position targetPosition = new Position(row, col);
 
         ArrayList<Position> possibleMoves = board.getPiece(selectedPosition).possibleMoves(board);
         if(possibleMoves.contains(targetPosition)){

@@ -6,8 +6,6 @@ import UtilityClasses.*;
 import java.util.ArrayList;
 
 public class King extends Piece{
-    public Color color;
-    public Position position;
     public final char symbol = 'K';
 
     public King(Color color, Position position){
@@ -23,13 +21,16 @@ public class King extends Piece{
                 {0, -1},           {0, 1},
                 {1, -1},  {1, 0},  {1, 1},
         };
+
         for(int[] move : kingMoves){
             int row = position.row + move[0];
             int col = position.col + move[1];
-            if (row > -1 && row < 8 && col > -1 && col < 8){
-                possible.row = row;
-                possible.col = col;
-                if(board.getPiece(possible).getColor() != color.color) possibleMoves.add(new Position(row, col));
+            possible.row = row;
+            possible.col = col;
+
+            if (board.isValidPosition(possible)) {
+                Piece target = board.getPiece(possible);
+                if(target == null || target.getColor() != color.color) possibleMoves.add(new Position(row, col));
             }
         }
         return possibleMoves;

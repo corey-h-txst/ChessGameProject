@@ -6,8 +6,6 @@ import UtilityClasses.*;
 import java.util.ArrayList;
 
 public class Rook extends Piece{
-    public Color color;
-    public Position position;
     public final char symbol = 'R';
 
     public Rook(Color color, Position position){
@@ -19,35 +17,54 @@ public class Rook extends Piece{
         ArrayList<Position> possibleMoves = new ArrayList<>();
         Position possible = new Position(position.row, position.col);
 
-        while (possible.row < 8){
+        // Check move down
+        while (true){
             possible.row++;
+            if (!board.isValidPosition(possible)) break;
             if (board.getPiece(possible) != null){
-                if (board.getPiece(possible).getColor() != color.color)possibleMoves.add(new Position(possible.row, possible.col));
+                if (board.getPiece(possible).getColor() != color.color) possibleMoves.add(new Position(possible.row, possible.col));
                 break;
             }
-        }
-        while (possible.col < 8){
-            possible.col++;
-            if (board.getPiece(possible) != null){
-                if (board.getPiece(possible).getColor() != color.color)possibleMoves.add(new Position(possible.row, possible.col));
-                break;
-            }
+            possibleMoves.add(new Position(possible.row, possible.col));
         }
         possible.row = this.position.row;
         possible.col = this.position.col;
-        while (possible.row > -1){
-            possible.row--;
+
+        // Check move right
+        while (true){
+            possible.col++;
+            if(!board.isValidPosition(possible)) break;
             if (board.getPiece(possible) != null){
-                if (board.getPiece(possible).getColor() != color.color)possibleMoves.add(new Position(possible.row, possible.col));
+                if (board.getPiece(possible).getColor() != color.color) possibleMoves.add(new Position(possible.row, possible.col));
                 break;
             }
+            possibleMoves.add(new Position(possible.row, possible.col));
         }
-        while (possible.col > -1){
-            possible.col--;
+        possible.row = this.position.row;
+        possible.col = this.position.col;
+
+        // Check move up
+        while (true){
+            possible.row--;
+            if(!board.isValidPosition(possible)) break;
             if (board.getPiece(possible) != null){
                 if (board.getPiece(possible).getColor() != color.color)possibleMoves.add(new Position(possible.row, possible.col));
                 break;
             }
+            possibleMoves.add(new Position(possible.row, possible.col));
+        }
+        possible.row = this.position.row;
+        possible.col = this.position.col;
+
+        // Check move left
+        while (true){
+            possible.col--;
+            if(!board.isValidPosition(possible)) break;
+            if (board.getPiece(possible) != null){
+                if (board.getPiece(possible).getColor() != color.color)possibleMoves.add(new Position(possible.row, possible.col));
+                break;
+            }
+            possibleMoves.add(new Position(possible.row, possible.col));
         }
 
         return possibleMoves;

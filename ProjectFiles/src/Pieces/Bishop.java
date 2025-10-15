@@ -6,8 +6,6 @@ import UtilityClasses.*;
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
-    public Color color;
-    public Position position;
     public final char symbol = 'B';
 
     public Bishop(Color color, Position position){
@@ -24,15 +22,17 @@ public class Bishop extends Piece {
             int row = position.row + move[0];
             int col = position.col + move[1];
 
-            while (row > -1 && row < 8 && col > -1 && col < 8){
+            while (true){
                 possible.row = row;
                 possible.col = col;
+                if(!board.isValidPosition(possible)) break;
 
-                if (board.getPiece(possible) != null){
-                    if (board.getPiece(possible).getColor() != color.color) possibleMoves.add(new Position(row, col));
+                Piece target =  board.getPiece(possible);
+                if (target != null){
+                    if (target.getColor() != color.color) possibleMoves.add(new Position(row, col));
                     break;
                 }
-                possibleMoves.add(possible);
+                possibleMoves.add(new Position(row, col));
                 row += move[0];
                 col += move[1];
             }
