@@ -13,6 +13,11 @@ public class Rook extends Piece{
     }
 
     @Override
+    public char getSymbol(){
+        return symbol;
+    }
+
+    @Override
     public ArrayList<Position> possibleMoves(Board board){
         ArrayList<Position> possibleMoves = new ArrayList<>();
         Position possible = new Position(position.row, position.col);

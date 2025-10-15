@@ -35,6 +35,7 @@ public class Game {
         System.out.println("followed by the desired position. EX: \"C2 C3\"");
         System.out.println("White will move first, good luck!");
         while (!chessBoard.isCheckmate(currentTurn.color)){
+            chessBoard.displayBoard();
             currentTurn.makeMove(input, chessBoard);
 
             if(currentTurn == white) currentTurn = black;

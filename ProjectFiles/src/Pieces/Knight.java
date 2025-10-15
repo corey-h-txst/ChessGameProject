@@ -13,6 +13,11 @@ public class Knight extends Piece{
     }
 
     @Override
+    public char getSymbol(){
+        return symbol;
+    }
+
+    @Override
     public ArrayList<Position> possibleMoves(Board board){
         ArrayList<Position> possibleMoves = new ArrayList<>();
         Position possible = new Position(0,0 );

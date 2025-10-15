@@ -15,6 +15,6 @@ public class Square {
         if (piece.isEmpty()){
             return squareBase;
         }
-        else return ("" + piece.getFirst().getColor() + piece.getFirst().symbol);
+        else return ("" + piece.getFirst().getColor() + piece.getFirst().getSymbol());
     }
 }

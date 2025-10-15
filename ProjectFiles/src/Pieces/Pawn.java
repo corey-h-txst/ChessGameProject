@@ -13,6 +13,11 @@ public class Pawn extends Piece{
     }
 
     @Override
+    public char getSymbol(){
+        return symbol;
+    }
+
+    @Override
     public ArrayList<Position> possibleMoves(Board board){
         ArrayList<Position> possibleMoves = new ArrayList<>();
         if(color.color == 'B'){

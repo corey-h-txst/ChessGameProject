@@ -34,6 +34,17 @@ public class Board {
         return board.get(position.row).get(position.col).piece.getFirst();
     }
 
+    public void displayBoard(){
+        System.out.println("  A  B  C  D  E  F  G  H");
+        for (int row = 0; row < 8; row++){
+            System.out.print(8 - row + " ");
+            for (int col = 0; col < 8; col++){
+                System.out.print(board.get(row).get(col).getDisplay() + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public void movePiece(Position curr, Position next) {
         if (!board.get(next.row).get(next.col).piece.isEmpty()) {
             capturedPieces.add(getPiece(next));

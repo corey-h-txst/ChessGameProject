@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Piece {
     public Color color;
     public Position position;
-    public final char symbol = ' ';
+    public char symbol = ' ';
 
     public Piece(Color color, Position position) {
         this.color = color;
@@ -17,6 +17,10 @@ public class Piece {
 
     public char getColor(){
         return color.color;
+    }
+
+    public char getSymbol(){
+        return symbol;
     }
 
     public ArrayList<Position> possibleMoves(Board board){

@@ -13,6 +13,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public char getSymbol(){
+        return symbol;
+    }
+
+    @Override
     public ArrayList<Position> possibleMoves(Board board) {
         ArrayList<Position> possibleMoves = new ArrayList<>();
         int[][] bishopMoves = {{-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
