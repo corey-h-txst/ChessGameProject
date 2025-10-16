@@ -5,7 +5,7 @@ import Game.Board;
 
 import java.util.ArrayList;
 
-public class Piece {
+public abstract class Piece {
     public Color color;
     public Position position;
     public char symbol = ' ';

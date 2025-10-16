@@ -4,7 +4,6 @@ import Pieces.*;
 import UtilityClasses.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Board {
     public ArrayList<ArrayList<Square>> board;
